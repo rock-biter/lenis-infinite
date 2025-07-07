@@ -1,25 +1,8 @@
 import './style.css'
 import 'lenis/dist/lenis.css'
 import * as THREE from 'three'
-import Lenis from 'lenis'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
 // __controls_import__
 // __gui_import__
-
-const lenis = new Lenis({
-	autoRaf: true,
-	infinite: true,
-	anchors: true,
-})
-window.lenis = lenis
-
-lenis.on('scroll', ScrollTrigger.update)
-gsap.ticker.add((t) => {
-	lenis.raf(t * 1000)
-})
-gsap.ticker.lagSmoothing(0)
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { Pane } from 'tweakpane'
@@ -28,18 +11,18 @@ import { Pane } from 'tweakpane'
  * Debug
  */
 // __gui__
-const config = {
-	example: 5,
-}
-const pane = new Pane()
+// const config = {
+// 	example: 5,
+// }
+// const pane = new Pane()
 
-pane
-	.addBinding(config, 'example', {
-		min: 0,
-		max: 10,
-		step: 0.1,
-	})
-	.on('change', (ev) => console.log(ev.value))
+// pane
+// 	.addBinding(config, 'example', {
+// 		min: 0,
+// 		max: 10,
+// 		step: 0.1,
+// 	})
+// 	.on('change', (ev) => console.log(ev.value))
 
 /**
  * Scene
@@ -119,27 +102,6 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 1.5)
 const directionalLight = new THREE.DirectionalLight(0xffffff, 4.5)
 directionalLight.position.set(3, 10, 7)
 scene.add(ambientLight, directionalLight)
-
-const tl = gsap.timeline({ paused: true })
-tl.to(mesh.rotation, { y: Math.PI * 2, duration: 4, ease: 'none' })
-tl.to(
-	camera.position,
-	{ x: 5, y: 5, z: 5, duration: 2, ease: 'power2.inOut' },
-	0
-)
-tl.to(
-	camera.position,
-	{ x: 2, y: 2, z: 2, duration: 2, ease: 'power2.inOut' },
-	2
-)
-
-ScrollTrigger.create({
-	animation: tl,
-	trigger: document.body,
-	start: 'top top',
-	end: 'bottom bottom',
-	scrub: true,
-})
 
 /**
  * Three js Clock
