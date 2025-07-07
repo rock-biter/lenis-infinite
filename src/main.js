@@ -1,7 +1,34 @@
 import './style.css'
-import 'lenis/dist/lenis.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import Lenis from 'lenis'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/all'
+gsap.registerPlugin(ScrollTrigger)
+
+const lenis = new Lenis({
+	// autoRaf: true,
+	anchors: true,
+	infinite: true,
+})
+
+// Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
+lenis.on('scroll', ScrollTrigger.update)
+
+// Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
+// This ensures Lenis's smooth scroll animation updates on each GSAP tick
+gsap.ticker.add((time) => {
+	lenis.raf(time * 1000) // Convert time from seconds to milliseconds
+})
+
+// Disable lag smoothing in GSAP to prevent any delay in scroll animations
+gsap.ticker.lagSmoothing(0)
+
+lenis.scrollTo(0, { immediate: true })
+
+window.addEventListener('load', (e) => {
+	lenis.scrollTo('#first', { duration: 1.5 })
+})
 
 /**
  * Scene
@@ -43,9 +70,32 @@ camera.lookAt(new THREE.Vector3(0, 2.5, 0))
  */
 const renderer = new THREE.WebGLRenderer({
 	antialias: window.devicePixelRatio < 2,
+	// alpha: true,
 })
-document.body.appendChild(renderer.domElement)
+document.body.prepend(renderer.domElement)
 handleResize()
+
+const tl = gsap.timeline({ paused: true })
+
+tl.to(mesh.rotation, { y: Math.PI * 2, duration: 4, ease: 'none' })
+tl.to(
+	camera.position,
+	{ x: 5, y: 5, z: 5, duration: 2, ease: 'power2.inOut' },
+	0
+)
+tl.to(
+	camera.position,
+	{ x: 2, y: 2, z: 2, duration: 2, ease: 'power2.inOut' },
+	2
+)
+
+ScrollTrigger.create({
+	animation: tl,
+	trigger: document.body,
+	start: 'top top',
+	end: 'bottom bottom',
+	scrub: true,
+})
 
 /**
  * OrbitControls
