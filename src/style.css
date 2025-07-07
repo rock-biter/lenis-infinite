@@ -1,0 +1,98 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* html,
+body {
+	 overflow: hidden; 
+} */
+
+html {
+	color: white;
+	font-family: 'Arial', sans-serif;
+}
+
+canvas {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: -1;
+}
+
+#nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: max-content;
+	height: 60px;
+
+	ul {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		/* align-items: center; */
+		z-index: 10;
+		list-style: none;
+		gap: 20px;
+		padding: 20px;
+		height: 100vh;
+	}
+
+	a {
+		color: white;
+		text-decoration: none;
+		font-size: 1.2rem;
+		margin: 0 15px;
+		transition: color 0.3s ease;
+
+		&:hover {
+			color: coral; /* Tomato color on hover */
+		}
+	}
+}
+
+/* ...existing code... */
+
+.full-screen-section {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding: 80px 60px;
+	/* align-items: center; */
+	/* background: #f5f5f5; */
+	/* border-bottom: 1px solid #ddd; */
+}
+
+.full-screen-section:nth-child(2) {
+	/* background: #e0e7ff; */
+	align-items: flex-end;
+}
+
+.full-screen-section:nth-child(3) {
+	/* background: #ffe0e0; */
+}
+
+.full-screen-section:nth-child(4) {
+	/* background: #e0e7ff; */
+	align-items: flex-end;
+}
+
+.full-screen-section h1 {
+	font-size: 8rem;
+	margin-bottom: 1rem;
+}
+
+.full-screen-section p {
+	font-size: 1.5rem;
+	max-width: 600px;
+	/* text-align: center; */
+}
+
+.scrollable {
+	width: 300px;
+	height: 80px;
+	overflow: auto;
+}
