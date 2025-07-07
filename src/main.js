@@ -24,6 +24,11 @@ gsap.ticker.lagSmoothing(0)
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { Pane } from 'tweakpane'
 
+lenis.scrollTo(0, { immediate: true })
+window.addEventListener('load', () => {
+	lenis.scrollTo('#first', { duration: 1.5 })
+})
+
 /**
  * Debug
  */
